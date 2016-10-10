@@ -20,13 +20,12 @@ test_that("y works as expected", {
 })
 
 
-test_that("range works as expected", {
+test_that("z works as expected", {
   z <- c(TRUE, FALSE, TRUE)
   
   expect_length(range_value(z), 1)
   expect_type(range_value(z), 'integer')
-  expect_that(range_value(z), equals(1))
-  
+  expect_equal(range_value(z), 1L)
 })
 
 
@@ -36,15 +35,19 @@ test_that("w works as expected", {
   
 })
 
+
+#Missing Values
 source("../functions/missing-values.R")
 context("Test for missing values")
 
 test_that("missing value works as expected", {
-  a <- c(1.2, 2.2, 3.2)
+  # It doesn't what is inside of the list a, the output will be an integer
+  a <- c(1.2, 2.2, 3.2, NA)
 
   expect_length(missing_values(a), 1)
   # the sum of missing integer can't be double, it's always integer
   expect_type(missing_values(a), 'integer')
   expect_gte(missing_values(a), 0)
+  
 })
 
