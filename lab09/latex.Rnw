@@ -1,0 +1,82 @@
+%% LyX 2.2.1 created this file.  For more info, see http://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass{article}
+\usepackage[sc]{mathpazo}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\geometry{verbose,tmargin=2.5cm,bmargin=2.5cm,lmargin=2.5cm,rmargin=2.5cm}
+\setcounter{secnumdepth}{2}
+\setcounter{tocdepth}{2}
+\usepackage{url}
+\usepackage[unicode=true,pdfusetitle,
+ bookmarks=true,bookmarksnumbered=true,bookmarksopen=true,bookmarksopenlevel=2,
+ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false]
+ {hyperref}
+\hypersetup{
+ pdfstartview={XYZ null null 1}}
+\usepackage{breakurl}
+\begin{document}
+\SweaveOpts{concordance=TRUE}
+<<setup, include=FALSE, cache=FALSE>>=
+library(knitr)
+# set global chunk options
+opts_chunk$set(fig.path='figure/minimal-', fig.align='center', fig.show='hold')
+options(formatR.arrow=TRUE,width=90)
+@
+
+\title{ Hw2 - Simple Regression Analysis in Latex Format}
+
+\author{Leanne Lee}
+
+\maketitle
+
+\section{Abstract}
+This homework is to reproduce the analysis from Section 3.1 of Ch 3 Linear Regression from the book "An Introduction to Statistical Learning" (by James et al). The homework will analyze the advertising dataset with linear regression and summary statistics.
+
+\section{Introduction}
+From the dataset advertising, I can reproduce the simple linear regression with TV and sales. The simple linear regression can predict a quantitative response Y based on predictor variable X. With the modeling, we can tell if there is a relationship exists between TV advertising and Sales. If there exists a positive relationship, the marketing team can decide to increase Tv advertising budget to promote their sales. 
+
+\section{Data}
+The dataset \emph{Advertising.csv} comes from \url{http://www-bcf.usc.edu/~gareth/ISL/Advertising.csv} It consists for TV, Radio, Newspaper and Sales columns. The structure of the columns are stored in numeric vectors. 
+
+\section{Methodology}
+By using the simple linear regression, we can predict the future sales based on the amount of TV advertising.  
+The simple linear regression equation is the following: 
+
+\begin{equation}
+$$ Y = A + Bx + e $$
+\end{equation}
+
+\begin{itemize}
+\item $Y = Sales $
+\item $A = Intercept $
+\item $Bx = TV advertising$
+\item $e = error $
+\end{itemize}
+
+In R command, we can fit a linear regression model by using the \textbf{lm()} command. 
+The \textbf{null hypothesis} is there does not exist a relationship between TV ad and sales. The alternative hypothesis is that there exists a relationship between TV ad and sales. 
+
+\section{Results}
+
+\subsection{Regression Table}
+
+<<boring-random, results = tex>>=
+library(xtable)
+data <- load('./regression.RData')
+regTable = xtable(reg_summary)
+print(regTable, comment=FALSE, type = "latex")
+@
+
+From the Regression table above, the coefficient estimate on TV is 0.047537. It indicates that every one dollar they spend on TV advertising, they will sell 0.047537 unit of product. Based on the large t-value and small p-value, we can reject the null hypothesis. Thus, there exists a relationship between TV ad and sales. The adjusted R-squared show how close the data are to the fitted regression line. It is about 60\% accurate to the actual regression line. 
+
+\begin{figure}[h!]
+\includegraphics{./scatterplot-tv-sales.png}
+\end{figure}
+
+This scatter plot shows that there is a positive correlation exists between TV ad and sales. There is not any outliers in the group. The sales increase as the TV ads amount increase. Thus, we can reject our null hypothesis.
+
+\section{Conclusions}
+This homework shows the relationship between TV advertising and sales. There exists a positive correlation between the TV advertising and sales. If the marketing team spend more money on TV advertising, they will generate more sales. Based on the table, we can apply the same linear regression model to radio and newspaper.
+
+\end{document}
